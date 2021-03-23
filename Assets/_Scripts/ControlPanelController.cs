@@ -26,8 +26,6 @@ public class ControlPanelController : MonoBehaviour
 
     public GameObject gameStateElement;
 
-    
-
     // Start is called before the first frame update
     void Start()
     {
@@ -38,13 +36,16 @@ public class ControlPanelController : MonoBehaviour
         rectTransform.anchoredPosition = offScreenPosition;
         timer = 0.0f;
 
-        // LoadFromPlayerPrefs();
-
+        LoadFromPlayerprefs();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //if (Input.GetKeyDown(KeyCode.Tab))
+        //{
+        //    ToggleControlPanel();
+        //}
 
         if (isOnScreen)
         {
@@ -108,8 +109,8 @@ public class ControlPanelController : MonoBehaviour
 
     public void OnLoadButtonPressed()
     {
-        LoadFromPlayerPrefs();
-        
+        LoadFromPlayerprefs();
+
         player.controller.enabled = false;
         player.transform.position = sceneData.playerPosition;
         player.transform.rotation = sceneData.playerRotation;
@@ -125,13 +126,14 @@ public class ControlPanelController : MonoBehaviour
         sceneData.playerRotation = player.transform.rotation;
         sceneData.playerHealth = player.health;
 
-        // need to do
-        SaveToPlayerPrefs();
-        
+        SavetoPlayerPrefs();
     }
 
-    public void SaveToPlayerPrefs()
+
+    public void SavetoPlayerPrefs()
     {
+        // Serialize and save our data to Player Preferences dictionary / db -- what we would like to do
+        //PlayerPrefs.SetString("playerData", JsonUtility.ToJson(sceneData));
 
         // what we may have to do:
         PlayerPrefs.SetFloat("playerTransformX", sceneData.playerPosition.x);
@@ -146,8 +148,11 @@ public class ControlPanelController : MonoBehaviour
         PlayerPrefs.SetInt("playerHealth", sceneData.playerHealth);
     }
 
-    public void LoadFromPlayerPrefs()
+    public void LoadFromPlayerprefs()
     {
+        // Deserializing and loading our Data from Player Preferences - What we would like to do
+        //var sceneDataJSONString = PlayerPrefs.GetString("playerData");
+        //JsonUtility.FromJsonOverwrite(sceneDataJSONString, sceneData);
 
         // What we might need to do:
         sceneData.playerPosition.x = PlayerPrefs.GetFloat("playerTransformX");
@@ -161,4 +166,5 @@ public class ControlPanelController : MonoBehaviour
 
         sceneData.playerHealth = PlayerPrefs.GetInt("playerHealth");
     }
+
 }
